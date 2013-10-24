@@ -76,7 +76,7 @@ namespace DesktopCapture
 
                 Process currentProcess = Process.GetProcessById((int)pid);
 
-                string test = currentProcess.MainModule.FileName;
+                //string test = currentProcess.MainModule.FileName;
 
                 FocusedWindow currentWindow = new FocusedWindow(windowNameStringBuilder.ToString(), handle);
                 currentWindow.ProgramName = currentProcess.ProcessName;

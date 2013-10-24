@@ -14,6 +14,8 @@ namespace DesktopCapture
         private static bool connectedTinCan;
         private static string username;
 
+        private static Queue<Statement> _offlineQueuedStatements = new Queue<Statement>();
+
         public static void ConnectToTinCan(string usrName, string passwd)
         {
             try
@@ -53,7 +55,15 @@ namespace DesktopCapture
             newAct.Id = "http://desktopapp/" + random.ToString();
 
             statements[0] = new Statement(new Actor(username, email), interact, newAct);
-            tincan.StoreStatements(statements);
+            
+            try
+            {
+                tincan.StoreStatements(statements);
+            }
+            catch (Exception e)
+            {
+                _offlineQueuedStatements.Enqueue(statements[0]);
+            }
         }
     }
 }
