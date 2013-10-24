@@ -43,7 +43,7 @@ namespace DesktopCapture
             Activity newAct = new Activity("http://35.9.22.105/xapi");
 
             LanguageMap inter = new LanguageMap();
-            inter.Add("en-US", "Interacted with");
+            inter.Add("en-US", "Interacted");
             System.Uri verbURI = new System.Uri("http://verbs/interaction");
             StatementVerb interact = new StatementVerb(verbURI, inter);
 
