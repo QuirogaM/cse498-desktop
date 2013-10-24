@@ -19,7 +19,6 @@ namespace DesktopCapture
             popList.Add("soffice.bin");
             popList.Add("WINWORD");
             popList.Add("Skype");
-            popList.Add("notepad++");
 
             acceptablePrograms = popList;
         }
@@ -60,14 +59,21 @@ namespace DesktopCapture
 
         public bool IsALearningActivity()
         {
-            foreach(string nme in acceptablePrograms)
+            bool programInList = (from program in acceptablePrograms
+                                 where program == ProgramName
+                                 select program).Any();
+
+            //bool programInList2 = acceptablePrograms.Where(x => x == ProgramName).Any();
+            return programInList;
+
+            /*foreach(string nme in acceptablePrograms)
             {
                 if (ProgramName == nme)
                 {
                     return true;
                 }
             }
-            return false;
+            return false;*/
         }
 
         public DictionaryEntry GetProgramNameAndFileName()
@@ -76,7 +82,12 @@ namespace DesktopCapture
             {
                 if (WindowTitle[i].Equals('-'))
                 {
-                    FileName = "This Is A Test " + i;
+                    FileName = "with " + WindowTitle.Remove(i - 1);
+                    break;
+                }
+                else
+                {
+                    FileName = WindowTitle;
                 }
             }
             return new DictionaryEntry(FileName, ProgramName);
