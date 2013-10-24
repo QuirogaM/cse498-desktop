@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Windows.Controls;
 using System.Windows.Threading;
 using System.Diagnostics;
 
@@ -58,6 +59,7 @@ namespace DesktopCapture
         private void DispatcherTimer_Tick(object sender, EventArgs e)
         {
             GetFocusedWindow();
+            TinCan.ResendQueuedStatements();
         }
 
         public void GetFocusedWindow()

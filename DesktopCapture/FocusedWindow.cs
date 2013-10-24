@@ -19,6 +19,7 @@ namespace DesktopCapture
             popList.Add("soffice.bin");
             popList.Add("WINWORD");
             popList.Add("Skype");
+            popList.Add("chrome");
 
             acceptablePrograms = popList;
         }

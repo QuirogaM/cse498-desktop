@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Windows.Threading;
 using RusticiSoftware.TinCanAPILibrary;
 using RusticiSoftware.TinCanAPILibrary.Model;
 using System.Windows.Forms;
@@ -64,6 +65,34 @@ namespace DesktopCapture
             {
                 _offlineQueuedStatements.Enqueue(statements[0]);
             }
+        }
+
+        /// <summary>
+        /// Returns true if the statements were sent successfully
+        /// </summary>
+        /// <returns></returns>
+        public static bool ResendQueuedStatements()
+        {
+            bool sendSuccessful = false;
+            try
+            {
+                while (_offlineQueuedStatements.Count > 0)
+                {
+                    Statement[] tempStatements = new Statement[1];
+                    tempStatements[0] = _offlineQueuedStatements.Peek();
+                    tincan.StoreStatements(tempStatements);
+
+                    // If it makes it to this point, an exception wasn't thrown and the statement was sent successfully
+                    _offlineQueuedStatements.Dequeue();
+                    sendSuccessful = true;
+                }
+            }
+            catch (Exception e)
+            {
+                sendSuccessful = false;
+            }
+
+            return sendSuccessful;
         }
     }
 }
