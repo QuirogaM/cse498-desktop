@@ -20,6 +20,9 @@ namespace DesktopCapture
             popList.Add("WINWORD");
             popList.Add("Skype");
             popList.Add("chrome");
+            popList.Add("EXCEL");
+            popList.Add("AcroRd32");
+            popList.Add("wmplayer");
 
             acceptablePrograms = popList;
         }
