@@ -70,14 +70,6 @@ namespace DesktopCapture
             //bool programInList2 = acceptablePrograms.Where(x => x == ProgramName).Any();
             return programInList;
 
-            /*foreach(string nme in acceptablePrograms)
-            {
-                if (ProgramName == nme)
-                {
-                    return true;
-                }
-            }
-            return false;*/
         }
 
         public DictionaryEntry GetProgramNameAndFileName()
@@ -97,5 +89,10 @@ namespace DesktopCapture
             return new DictionaryEntry(FileName, ProgramName);
         }
 
+        public static bool AddToProgramList(string programName)
+        {
+            //TODO
+            return true;
+        }
     }
 }

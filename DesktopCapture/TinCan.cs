@@ -45,7 +45,7 @@ namespace DesktopCapture
 
             LanguageMap inter = new LanguageMap();
             inter.Add("en-US", "Interacted");
-            System.Uri verbURI = new System.Uri("http://verbs/interaction");
+            System.Uri verbURI = new System.Uri("http://verbs/interaction/");
             StatementVerb interact = new StatementVerb(verbURI, inter);
 
             newAct.Definition = new ActivityDefinition();

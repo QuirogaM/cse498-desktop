@@ -94,5 +94,13 @@ namespace DesktopCapture
             }
         }
 
+        public void AddNewProgram()
+        {
+            //This function will pull the active processes, and allow a user to add a process to the
+            //active list of acceptable programs.
+
+            //TODO
+        }
+
     }
 }
