@@ -60,12 +60,18 @@ namespace DesktopCapture
         {
             userLogin = UserField.Text;
             userPassword = passwordBox1.Password;
-            TinCan.ConnectToTinCan(userLogin, userPassword);
-            _isUserLoggedIn = true;
-            _focusedWindowManager.StartWatching();
-            UserField.Clear();
-            passwordBox1.Clear();
-            MinimizeWindow();
+            _isUserLoggedIn = TinCan.ConnectToTinCan(userLogin, userPassword);
+            if (_isUserLoggedIn)
+            {
+                _focusedWindowManager.StartWatching();
+                passwordBox1.Clear();
+                MinimizeWindow();
+            }
+            else
+            {
+                UserField.Clear();
+                passwordBox1.Clear();
+            }
         }
 
         protected void Show_Click(Object sender, System.EventArgs e)
@@ -75,7 +81,11 @@ namespace DesktopCapture
 
         protected void Add_Click(Object sender, System.EventArgs e)
         {
-            //DO NOTHING
+            AddProgramWindow newWindow = new AddProgramWindow();
+            App.Current.MainWindow = newWindow;
+            //MinimizeWindow();
+            //this.Close();
+            newWindow.Show();
         }
 
         protected void Exit_Click(Object sender, System.EventArgs e)

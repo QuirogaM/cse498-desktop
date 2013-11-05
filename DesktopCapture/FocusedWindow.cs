@@ -21,7 +21,7 @@ namespace DesktopCapture
             popList.Add("Skype");
             popList.Add("EXCEL");
             popList.Add("POWERPNT");
-            popList.Add("AcroRd32");
+            //popList.Add("AcroRd32");
             popList.Add("wmplayer");
 
             acceptablePrograms = popList;

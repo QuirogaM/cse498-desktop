@@ -17,7 +17,7 @@ namespace DesktopCapture
 
         private static Queue<Statement> _offlineQueuedStatements = new Queue<Statement>();
 
-        public static void ConnectToTinCan(string usrName, string passwd)
+        public static bool ConnectToTinCan(string usrName, string passwd)
         {
             try
             {
@@ -32,6 +32,8 @@ namespace DesktopCapture
             }
             if (connectedTinCan)
                 username = usrName;
+
+            return connectedTinCan;
 
         }
 

@@ -32,7 +32,7 @@ namespace DesktopCapture
 
         private Dictionary<string, string> _fileAndProgramNames = new Dictionary<string, string>();
 
-        private TimeSpan _intervalTime = new TimeSpan(0, 0, 5);
+        private TimeSpan _intervalTime = new TimeSpan(0, 0, 10);
 
         public FocusedWindowManager()
         {
@@ -92,14 +92,6 @@ namespace DesktopCapture
                     TinCan.SendStatement(currentWindow.FileName);
                 }
             }
-        }
-
-        public void AddNewProgram()
-        {
-            //This function will pull the active processes, and allow a user to add a process to the
-            //active list of acceptable programs.
-
-            //TODO
         }
 
     }
