@@ -19,8 +19,8 @@ namespace DesktopCapture
             popList.Add("soffice.bin");
             popList.Add("WINWORD");
             popList.Add("Skype");
-            popList.Add("chrome");
             popList.Add("EXCEL");
+            popList.Add("POWERPNT");
             popList.Add("AcroRd32");
             popList.Add("wmplayer");
 
@@ -91,8 +91,24 @@ namespace DesktopCapture
 
         public static bool AddToProgramList(string programName)
         {
-            //TODO
-            return true;
+            if (!acceptablePrograms.Contains(programName))
+            {
+                acceptablePrograms.Add(programName);
+                return true;
+            }
+
+            return false;
+        }
+
+        public static bool RemoveFromProgramList(string programName)
+        {
+            if (acceptablePrograms.Contains(programName))
+            {
+                acceptablePrograms.Remove(programName);
+                return true;
+            }
+
+            return false;
         }
     }
 }

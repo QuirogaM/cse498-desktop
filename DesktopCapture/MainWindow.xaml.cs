@@ -44,7 +44,8 @@ namespace DesktopCapture
 
             trayMenu = new System.Windows.Forms.ContextMenu();
             trayMenu.MenuItems.Add(0, new System.Windows.Forms.MenuItem("Show", new System.EventHandler(Show_Click)));
-            trayMenu.MenuItems.Add(1, new System.Windows.Forms.MenuItem("Exit", new System.EventHandler(Exit_Click)));
+            trayMenu.MenuItems.Add(1, new System.Windows.Forms.MenuItem("Add Program", new System.EventHandler(Add_Click)));
+            trayMenu.MenuItems.Add(2, new System.Windows.Forms.MenuItem("Exit", new System.EventHandler(Exit_Click)));
 
             trayIcon.ContextMenu = trayMenu;
 
@@ -72,6 +73,11 @@ namespace DesktopCapture
             ReviveWindow();
         }
 
+        protected void Add_Click(Object sender, System.EventArgs e)
+        {
+            //DO NOTHING
+        }
+
         protected void Exit_Click(Object sender, System.EventArgs e)
         {
             Close();
@@ -91,7 +97,7 @@ namespace DesktopCapture
 
         private void Window_Closed(object sender, EventArgs e)
         {
-            this.trayIcon.Visible = false;
+            trayIcon.Visible = false;
         }
 
     }
