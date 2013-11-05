@@ -21,6 +21,7 @@ namespace DesktopCapture
     {
         private List<Process> _allProcesses = new List<Process>();
         private List<string> _allProcessesStrings = new List<string>();
+        private List<string> _trackedPrograms = new List<string>();
 
         public AddProgramWindow()
         {
@@ -29,6 +30,7 @@ namespace DesktopCapture
             InitializeComponent();
 
             listBox1.ItemsSource = _allProcessesStrings;
+            listBox2.ItemsSource = _trackedPrograms;
         }
 
         private void button1_Click(object sender, RoutedEventArgs e)
@@ -75,6 +77,12 @@ namespace DesktopCapture
             }
 
             _allProcessesStrings.Sort();
+            _trackedPrograms = FocusedWindow.acceptablePrograms;
+        }
+
+        private void SetPrograms()
+        {
+            //TODO
         }
     }
 }
