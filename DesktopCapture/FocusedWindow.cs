@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Automation;
 using System.Xml;
+using System.Xml.Linq;
 
 namespace DesktopCapture
 {
@@ -36,7 +37,7 @@ namespace DesktopCapture
 
         public static void SetupPrograms()
         {
-            List<string> popList = new List<string>();
+            /*List<string> popList = new List<string>();
             popList.Add("soffice.bin");
             popList.Add("WINWORD");
             //popList.Add("Skype");
@@ -46,7 +47,8 @@ namespace DesktopCapture
             popList.Add("wmplayer");
 
             acceptablePrograms = popList;
-            WriteToXML();
+            WriteToXML();*/
+            LoadFromXML();
         }
 
         private int _windowHandle;
@@ -135,6 +137,22 @@ namespace DesktopCapture
             writer.Flush();
             writer.Close();
 
+        }
+
+        private static void LoadFromXML()
+        {
+            List<string> popList = new List<string>();
+
+            XmlDocument doc = new XmlDocument();
+            doc.Load("Programs.xml");
+
+            foreach (XmlNode n in doc.DocumentElement.ChildNodes)
+            {
+                string pass = n.InnerText;
+                popList.Add(pass);
+            }
+
+            acceptablePrograms = popList;
         }
     }
 }
