@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Automation;
+using System.Xml;
 
 namespace DesktopCapture
 {
@@ -100,6 +101,7 @@ namespace DesktopCapture
             {
                 acceptablePrograms.Add(programName);
             }
+            WriteToXML();
         }
 
         public static void RemoveFromProgramList(string programName)
@@ -108,6 +110,29 @@ namespace DesktopCapture
             {
                 acceptablePrograms.Remove(programName);
             }
+
+        }
+
+        private static void WriteToXML()
+        {
+            XmlWriterSettings settings = new XmlWriterSettings();
+            settings.Indent = true;
+            XmlWriter writer = XmlWriter.Create(@"Programs.xml", settings);
+
+            writer.WriteStartDocument();
+
+            writer.WriteComment("XML Document for storage of Acceptable Learning Programs");
+            writer.WriteStartElement("ProgramList");
+            foreach (string process in acceptablePrograms)
+            {
+                writer.WriteStartElement("Program");
+                writer.WriteElementString("ProcessName", process);
+                writer.WriteEndElement();
+            }
+            writer.WriteEndElement();
+            writer.WriteEndDocument();
+            writer.Flush();
+            writer.Close();
 
         }
     }
