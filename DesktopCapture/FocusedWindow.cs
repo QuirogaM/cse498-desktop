@@ -39,13 +39,14 @@ namespace DesktopCapture
             List<string> popList = new List<string>();
             popList.Add("soffice.bin");
             popList.Add("WINWORD");
-            popList.Add("Skype");
+            //popList.Add("Skype");
             popList.Add("EXCEL");
             popList.Add("POWERPNT");
             //popList.Add("AcroRd32");
             popList.Add("wmplayer");
 
             acceptablePrograms = popList;
+            WriteToXML();
         }
 
         private int _windowHandle;
@@ -110,7 +111,7 @@ namespace DesktopCapture
             {
                 acceptablePrograms.Remove(programName);
             }
-
+            WriteToXML();
         }
 
         private static void WriteToXML()
