@@ -32,7 +32,7 @@ namespace DesktopCapture
 
         private Dictionary<string, string> _fileAndProgramNames = new Dictionary<string, string>();
 
-        private TimeSpan _intervalTime = new TimeSpan(0, 0, 5);
+        private TimeSpan _intervalTime = new TimeSpan(0, 0, 10);
 
         public FocusedWindowManager()
         {

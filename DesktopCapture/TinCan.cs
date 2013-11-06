@@ -17,7 +17,7 @@ namespace DesktopCapture
 
         private static Queue<Statement> _offlineQueuedStatements = new Queue<Statement>();
 
-        public static void ConnectToTinCan(string usrName, string passwd)
+        public static bool ConnectToTinCan(string usrName, string passwd)
         {
             try
             {
@@ -33,6 +33,8 @@ namespace DesktopCapture
             if (connectedTinCan)
                 username = usrName;
 
+            return connectedTinCan;
+
         }
 
         public static void SendStatement(string activity)
@@ -45,7 +47,7 @@ namespace DesktopCapture
 
             LanguageMap inter = new LanguageMap();
             inter.Add("en-US", "Interacted");
-            System.Uri verbURI = new System.Uri("http://verbs/interaction");
+            System.Uri verbURI = new System.Uri("http://verbs/interaction/");
             StatementVerb interact = new StatementVerb(verbURI, inter);
 
             newAct.Definition = new ActivityDefinition();

@@ -11,18 +11,7 @@ namespace DesktopCapture
 {
     public class FocusedWindow : IEquatable<FocusedWindow>
     {
-        private static List<string> acceptablePrograms;
-
-        public static void SetupPrograms()
-        {
-            List<string> popList = new List<string>();
-            popList.Add("soffice.bin");
-            popList.Add("WINWORD");
-            popList.Add("Skype");
-            popList.Add("chrome");
-
-            acceptablePrograms = popList;
-        }
+        //private static List<string> acceptablePrograms;
 
         public string WindowTitle
         {
@@ -37,6 +26,25 @@ namespace DesktopCapture
         public string FileName
         {
             get; private set;
+        }
+
+        public static List<string> acceptablePrograms
+        {
+            get; private set;
+        }
+
+        public static void SetupPrograms()
+        {
+            List<string> popList = new List<string>();
+            popList.Add("soffice.bin");
+            popList.Add("WINWORD");
+            popList.Add("Skype");
+            popList.Add("EXCEL");
+            popList.Add("POWERPNT");
+            //popList.Add("AcroRd32");
+            popList.Add("wmplayer");
+
+            acceptablePrograms = popList;
         }
 
         private int _windowHandle;
@@ -67,14 +75,6 @@ namespace DesktopCapture
             //bool programInList2 = acceptablePrograms.Where(x => x == ProgramName).Any();
             return programInList;
 
-            /*foreach(string nme in acceptablePrograms)
-            {
-                if (ProgramName == nme)
-                {
-                    return true;
-                }
-            }
-            return false;*/
         }
 
         public DictionaryEntry GetProgramNameAndFileName()
@@ -94,5 +94,26 @@ namespace DesktopCapture
             return new DictionaryEntry(FileName, ProgramName);
         }
 
+        public static bool AddToProgramList(string programName)
+        {
+            if (!acceptablePrograms.Contains(programName))
+            {
+                acceptablePrograms.Add(programName);
+                return true;
+            }
+
+            return false;
+        }
+
+        public static bool RemoveFromProgramList(string programName)
+        {
+            if (acceptablePrograms.Contains(programName))
+            {
+                acceptablePrograms.Remove(programName);
+                return true;
+            }
+
+            return false;
+        }
     }
 }

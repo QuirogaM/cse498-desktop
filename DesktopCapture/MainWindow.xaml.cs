@@ -44,7 +44,8 @@ namespace DesktopCapture
 
             trayMenu = new System.Windows.Forms.ContextMenu();
             trayMenu.MenuItems.Add(0, new System.Windows.Forms.MenuItem("Show", new System.EventHandler(Show_Click)));
-            trayMenu.MenuItems.Add(1, new System.Windows.Forms.MenuItem("Exit", new System.EventHandler(Exit_Click)));
+            trayMenu.MenuItems.Add(1, new System.Windows.Forms.MenuItem("Add Program", new System.EventHandler(Add_Click)));
+            trayMenu.MenuItems.Add(2, new System.Windows.Forms.MenuItem("Exit", new System.EventHandler(Exit_Click)));
 
             trayIcon.ContextMenu = trayMenu;
 
@@ -59,17 +60,32 @@ namespace DesktopCapture
         {
             userLogin = UserField.Text;
             userPassword = passwordBox1.Password;
-            TinCan.ConnectToTinCan(userLogin, userPassword);
-            _isUserLoggedIn = true;
-            _focusedWindowManager.StartWatching();
-            UserField.Clear();
-            passwordBox1.Clear();
-            MinimizeWindow();
+            _isUserLoggedIn = TinCan.ConnectToTinCan(userLogin, userPassword);
+            if (_isUserLoggedIn)
+            {
+                _focusedWindowManager.StartWatching();
+                passwordBox1.Clear();
+                MinimizeWindow();
+            }
+            else
+            {
+                UserField.Clear();
+                passwordBox1.Clear();
+            }
         }
 
         protected void Show_Click(Object sender, System.EventArgs e)
         {
             ReviveWindow();
+        }
+
+        protected void Add_Click(Object sender, System.EventArgs e)
+        {
+            AddProgramWindow newWindow = new AddProgramWindow();
+            App.Current.MainWindow = newWindow;
+            //MinimizeWindow();
+            //this.Close();
+            newWindow.Show();
         }
 
         protected void Exit_Click(Object sender, System.EventArgs e)
@@ -91,7 +107,7 @@ namespace DesktopCapture
 
         private void Window_Closed(object sender, EventArgs e)
         {
-            this.trayIcon.Visible = false;
+            trayIcon.Visible = false;
         }
 
     }
