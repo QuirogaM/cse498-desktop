@@ -22,6 +22,8 @@ namespace DesktopCapture
     {
         private List<Process> _allProcesses = new List<Process>();
         private List<string> _allProcessesStrings = new List<string>();
+        private SortedDictionary<string, string> _ProcessDictionary = new SortedDictionary<string, string>();
+        private List<string> keyList = new List<string>();
 
         private List<string> _allProcessIDs = new List<string>();
 
@@ -39,24 +41,34 @@ namespace DesktopCapture
 
         private void button1_Click(object sender, RoutedEventArgs e)
         {
+            AddProgram();
+            RefreshLists();
+
+        }
+
+        private void AddProgram()
+        {
             try
             {
                 int index = listBox1.SelectedIndex;
-                string pass = _allProcessIDs.ElementAt(index);
-                _allProcessesStrings.RemoveAt(index);
-                _allProcessIDs.RemoveAt(index);
+                string theKey = keyList.ElementAt(index);
+                string pass = _ProcessDictionary[theKey];
+                _ProcessDictionary.Remove(theKey);
                 _trackedPrograms.Add(pass);
-                _trackedPrograms.Sort();
             }
             catch
             {
                 // DO NOTHING
             }
-            RefreshLists();
-
         }
 
         private void button2_Click(object sender, RoutedEventArgs e)
+        {
+            DropProgram();
+            RefreshLists();
+        }
+
+        private void DropProgram()
         {
             try
             {
@@ -64,14 +76,11 @@ namespace DesktopCapture
                 string pass = _trackedPrograms.ElementAt(index);
                 _trackedPrograms.RemoveAt(index);
                 _removedPrograms.Add(pass);
-                //_allProcessesStrings.Add(pass);
-                //_allProcessesStrings.Sort();
             }
             catch
             {
                 // DO NOTHING
             }
-            RefreshLists();
         }
 
         private void RefreshLists()
@@ -79,7 +88,15 @@ namespace DesktopCapture
             _trackedPrograms.Sort();
             listBox1.ItemsSource = null;
             listBox2.ItemsSource = null;
-            listBox1.ItemsSource = _allProcessesStrings;
+
+            keyList = new List<string>();
+
+            foreach (string k in _ProcessDictionary.Keys)
+            {
+                keyList.Add(k);
+            }
+
+            listBox1.ItemsSource = keyList;
             listBox2.ItemsSource = _trackedPrograms;
         }
 
@@ -141,9 +158,7 @@ namespace DesktopCapture
                             if (!_allProcessesStrings.Contains(programName))
                             {
                                 programID = programID.Replace(".exe", "");
-                                _allProcessesStrings.Add(programName);
-                                _allProcessIDs.Add(programID);
-                                //_allRunningProcesses.Add(versionInfo);
+                                _ProcessDictionary.Add(programName, programID);
                             }
                         }
                         catch (Exception e)
@@ -179,6 +194,7 @@ namespace DesktopCapture
             //}
 
             //_allProcessesStrings.Sort();
+            
             _trackedPrograms = FocusedWindow.acceptablePrograms;
         }
 
