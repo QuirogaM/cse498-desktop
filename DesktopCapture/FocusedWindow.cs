@@ -6,6 +6,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Automation;
+using System.Xml;
+using System.Xml.Linq;
 
 namespace DesktopCapture
 {
@@ -35,16 +37,18 @@ namespace DesktopCapture
 
         public static void SetupPrograms()
         {
-            List<string> popList = new List<string>();
+            /*List<string> popList = new List<string>();
             popList.Add("soffice.bin");
             popList.Add("WINWORD");
-            popList.Add("Skype");
+            //popList.Add("Skype");
             popList.Add("EXCEL");
             popList.Add("POWERPNT");
             //popList.Add("AcroRd32");
             popList.Add("wmplayer");
 
             acceptablePrograms = popList;
+            WriteToXML();*/
+            LoadFromXML();
         }
 
         private int _windowHandle;
@@ -94,26 +98,61 @@ namespace DesktopCapture
             return new DictionaryEntry(FileName, ProgramName);
         }
 
-        public static bool AddToProgramList(string programName)
+        public static void AddToProgramList(string programName)
         {
             if (!acceptablePrograms.Contains(programName))
             {
                 acceptablePrograms.Add(programName);
-                return true;
             }
-
-            return false;
+            WriteToXML();
         }
 
-        public static bool RemoveFromProgramList(string programName)
+        public static void RemoveFromProgramList(string programName)
         {
             if (acceptablePrograms.Contains(programName))
             {
                 acceptablePrograms.Remove(programName);
-                return true;
+            }
+            WriteToXML();
+        }
+
+        private static void WriteToXML()
+        {
+            XmlWriterSettings settings = new XmlWriterSettings();
+            settings.Indent = true;
+            XmlWriter writer = XmlWriter.Create(@"Programs.xml", settings);
+
+            writer.WriteStartDocument();
+
+            writer.WriteComment("XML Document for storage of Acceptable Learning Programs");
+            writer.WriteStartElement("ProgramList");
+            foreach (string process in acceptablePrograms)
+            {
+                writer.WriteStartElement("Program");
+                writer.WriteElementString("ProcessName", process);
+                writer.WriteEndElement();
+            }
+            writer.WriteEndElement();
+            writer.WriteEndDocument();
+            writer.Flush();
+            writer.Close();
+
+        }
+
+        private static void LoadFromXML()
+        {
+            List<string> popList = new List<string>();
+
+            XmlDocument doc = new XmlDocument();
+            doc.Load("Programs.xml");
+
+            foreach (XmlNode n in doc.DocumentElement.ChildNodes)
+            {
+                string pass = n.InnerText;
+                popList.Add(pass);
             }
 
-            return false;
+            acceptablePrograms = popList;
         }
     }
 }

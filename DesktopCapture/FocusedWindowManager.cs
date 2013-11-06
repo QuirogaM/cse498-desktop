@@ -40,6 +40,11 @@ namespace DesktopCapture
             _dispatcherTimer.Tick += DispatcherTimer_Tick;
         }
 
+        public void ClearActivities()
+        {
+            _learningActivityWindows.Clear();
+        }
+
         /// <summary>
         /// Starts monitoring focused windows.
         /// </summary>

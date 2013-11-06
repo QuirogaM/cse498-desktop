@@ -22,7 +22,13 @@ namespace DesktopCapture
     {
         private List<Process> _allProcesses = new List<Process>();
         private List<string> _allProcessesStrings = new List<string>();
+        private SortedDictionary<string, string> _ProcessDictionary = new SortedDictionary<string, string>();
+        private List<string> keyList = new List<string>();
+
+        private List<string> _allProcessIDs = new List<string>();
+
         private List<string> _trackedPrograms = new List<string>();
+        private List<string> _removedPrograms = new List<string>();
 
         public AddProgramWindow()
         {
@@ -30,23 +36,75 @@ namespace DesktopCapture
 
             InitializeComponent();
 
-            listBox1.ItemsSource = _allProcessesStrings;
-            listBox2.ItemsSource = _trackedPrograms;
+            RefreshLists();
         }
 
         private void button1_Click(object sender, RoutedEventArgs e)
         {
-            //TODO
+            AddProgram();
+            RefreshLists();
+
+        }
+
+        private void AddProgram()
+        {
+            try
+            {
+                int index = listBox1.SelectedIndex;
+                string theKey = keyList.ElementAt(index);
+                string pass = _ProcessDictionary[theKey];
+                _ProcessDictionary.Remove(theKey);
+                _trackedPrograms.Add(pass);
+            }
+            catch
+            {
+                // DO NOTHING
+            }
         }
 
         private void button2_Click(object sender, RoutedEventArgs e)
         {
-            //TODO
+            DropProgram();
+            RefreshLists();
+        }
+
+        private void DropProgram()
+        {
+            try
+            {
+                int index = listBox2.SelectedIndex;
+                string pass = _trackedPrograms.ElementAt(index);
+                _trackedPrograms.RemoveAt(index);
+                _removedPrograms.Add(pass);
+            }
+            catch
+            {
+                // DO NOTHING
+            }
+        }
+
+        private void RefreshLists()
+        {
+            _trackedPrograms.Sort();
+            listBox1.ItemsSource = null;
+            listBox2.ItemsSource = null;
+
+            keyList = new List<string>();
+
+            foreach (string k in _ProcessDictionary.Keys)
+            {
+                keyList.Add(k);
+            }
+
+            listBox1.ItemsSource = keyList;
+            listBox2.ItemsSource = _trackedPrograms;
         }
 
         private void okButton_Click(object sender, RoutedEventArgs e)
         {
-            //TODO
+            SetPrograms();
+            RemovePrograms();
+            this.Close();
         }
 
         private void cancelButton_Click(object sender, RoutedEventArgs e)
@@ -68,6 +126,7 @@ namespace DesktopCapture
             //active list of acceptable programs.
 
             string programName;
+            string programID;
 
             var wmiQueryString = "SELECT ProcessId, ExecutablePath, CommandLine FROM Win32_Process";
             using (var searcher = new ManagementObjectSearcher(wmiQueryString))
@@ -94,9 +153,13 @@ namespace DesktopCapture
 
                             System.Diagnostics.FileVersionInfo versionInfo = System.Diagnostics.FileVersionInfo.GetVersionInfo(item.Path);
                             programName = versionInfo.FileDescription;
+                            programID = versionInfo.OriginalFilename;
 
                             if (!_allProcessesStrings.Contains(programName))
-                                _allProcessesStrings.Add(programName);
+                            {
+                                programID = programID.Replace(".exe", "");
+                                _ProcessDictionary.Add(programName, programID);
+                            }
                         }
                         catch (Exception e)
                         {
@@ -130,13 +193,25 @@ namespace DesktopCapture
             //    }
             //}
 
-            _allProcessesStrings.Sort();
+            //_allProcessesStrings.Sort();
+            
             _trackedPrograms = FocusedWindow.acceptablePrograms;
         }
 
         private void SetPrograms()
         {
-            //TODO
+            foreach (string prog in _trackedPrograms)
+            {
+                FocusedWindow.AddToProgramList(prog);
+            }
+        }
+
+        private void RemovePrograms()
+        {
+            foreach (string prog in _removedPrograms)
+            {
+                FocusedWindow.RemoveFromProgramList(prog);
+            }
         }
     }
 }

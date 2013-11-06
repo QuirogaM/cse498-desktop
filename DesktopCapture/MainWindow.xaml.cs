@@ -44,8 +44,9 @@ namespace DesktopCapture
 
             trayMenu = new System.Windows.Forms.ContextMenu();
             trayMenu.MenuItems.Add(0, new System.Windows.Forms.MenuItem("Show", new System.EventHandler(Show_Click)));
-            trayMenu.MenuItems.Add(1, new System.Windows.Forms.MenuItem("Add Program", new System.EventHandler(Add_Click)));
-            trayMenu.MenuItems.Add(2, new System.Windows.Forms.MenuItem("Exit", new System.EventHandler(Exit_Click)));
+            trayMenu.MenuItems.Add(1, new System.Windows.Forms.MenuItem("Add/Remove Program", new System.EventHandler(Add_Click)));
+            trayMenu.MenuItems.Add(2, new System.Windows.Forms.MenuItem("Logout", new System.EventHandler(Logout_Click)));
+            trayMenu.MenuItems.Add(3, new System.Windows.Forms.MenuItem("Exit", new System.EventHandler(Exit_Click)));
 
             trayIcon.ContextMenu = trayMenu;
 
@@ -86,6 +87,12 @@ namespace DesktopCapture
             //MinimizeWindow();
             //this.Close();
             newWindow.Show();
+        }
+
+        protected void Logout_Click(Object sender, System.EventArgs e)
+        {
+            _focusedWindowManager.ClearActivities();
+            TinCan.LogoutTinCan();
         }
 
         protected void Exit_Click(Object sender, System.EventArgs e)

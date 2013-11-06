@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--XML Document for storage of Acceptable Learning Programs-->
+<ProgramList>
+  <Program>
+    <ProcessName>soffice.bin</ProcessName>
+  </Program>
+  <Program>
+    <ProcessName>WINWORD</ProcessName>
+  </Program>
+  <Program>
+    <ProcessName>EXCEL</ProcessName>
+  </Program>
+  <Program>
+    <ProcessName>POWERPNT</ProcessName>
+  </Program>
+  <Program>
+    <ProcessName>wmplayer</ProcessName>
+  </Program>
+</ProgramList>
