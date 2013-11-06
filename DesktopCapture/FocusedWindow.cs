@@ -94,26 +94,21 @@ namespace DesktopCapture
             return new DictionaryEntry(FileName, ProgramName);
         }
 
-        public static bool AddToProgramList(string programName)
+        public static void AddToProgramList(string programName)
         {
             if (!acceptablePrograms.Contains(programName))
             {
                 acceptablePrograms.Add(programName);
-                return true;
             }
-
-            return false;
         }
 
-        public static bool RemoveFromProgramList(string programName)
+        public static void RemoveFromProgramList(string programName)
         {
             if (acceptablePrograms.Contains(programName))
             {
                 acceptablePrograms.Remove(programName);
-                return true;
             }
 
-            return false;
         }
     }
 }
