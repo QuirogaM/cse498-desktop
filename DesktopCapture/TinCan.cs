@@ -37,6 +37,11 @@ namespace DesktopCapture
 
         }
 
+        public static void LogoutTinCan()
+        {
+            username = null;
+        }
+
         public static void SendStatement(string activity)
         {
             string email = "mailto:";
