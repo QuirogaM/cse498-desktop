@@ -11,6 +11,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Diagnostics;
+using System.Management;
 
 namespace DesktopCapture
 {
@@ -66,15 +67,68 @@ namespace DesktopCapture
             //This function will pull the active processes, and allow a user to add a process to the
             //active list of acceptable programs.
 
-            Process[] processList = Process.GetProcesses();
+            string programName;
 
-            foreach (Process p in processList)
+            var wmiQueryString = "SELECT ProcessId, ExecutablePath, CommandLine FROM Win32_Process";
+            using (var searcher = new ManagementObjectSearcher(wmiQueryString))
+            using (var results = searcher.Get())
             {
-                string pName = p.ProcessName;
-                _allProcesses.Add(p);
-                if(!_allProcessesStrings.Contains(pName))
-                    _allProcessesStrings.Add(p.ProcessName);
+                var query = from process in Process.GetProcesses()
+                            join mo in results.Cast<ManagementObject>()
+                            on process.Id equals (int)(uint)mo["ProcessId"]
+                            select new
+                            {
+                                Process = process,
+                                Path = (string)mo["ExecutablePath"],
+                                CommandLine = (string)mo["CommandLine"],
+                            };
+                foreach (var item in query)
+                {
+                    // Do what you want with the Process, Path, and CommandLine
+
+                    if (item.Path != null)
+                    {
+                        _allProcesses.Add(item.Process);
+                        try
+                        {
+
+                            System.Diagnostics.FileVersionInfo versionInfo = System.Diagnostics.FileVersionInfo.GetVersionInfo(item.Path);
+                            programName = versionInfo.FileDescription;
+
+                            if (!_allProcessesStrings.Contains(programName))
+                                _allProcessesStrings.Add(programName);
+                        }
+                        catch (Exception e)
+                        {
+                            
+                        }
+                    }
+                }
             }
+
+            //Process[] processList = Process.GetProcesses();
+
+            //foreach (Process p in processList)
+            //{
+            //    string pName = p.ProcessName;
+
+                
+            //    try
+            //    {
+            //        programName = p.MainModule.FileVersionInfo.ProductName;
+
+            //        _allProcesses.Add(p);
+            //        if (!_allProcessesStrings.Contains(programName))
+            //            _allProcessesStrings.Add(programName);
+
+                    
+
+            //    }
+            //    catch (Exception e)
+            //    {
+
+            //    }
+            //}
 
             _allProcessesStrings.Sort();
             _trackedPrograms = FocusedWindow.acceptablePrograms;

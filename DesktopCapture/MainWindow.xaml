@@ -1,7 +1,7 @@
 ﻿<Window x:Class="DesktopCapture.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="MainWindow" Height="250" Width="350" WindowStartupLocation="CenterScreen" MinWidth="350" MinHeight="250" MaxWidth="350" MaxHeight="250" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="#FF006A72" Icon="/DesktopCapture;component/techSmith-01.ico" WindowStyle="SingleBorderWindow">
+        Title="Desktop Capture" Height="250" Width="350" WindowStartupLocation="CenterScreen" MinWidth="350" MinHeight="250" MaxWidth="350" MaxHeight="250" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="#FF006A72" Icon="/DesktopCapture;component/techSmith-01.ico" WindowStyle="SingleBorderWindow">
     <Grid>
         <TextBox Height="23" HorizontalAlignment="Left" Margin="113,74,0,0" Name="UserField" VerticalAlignment="Top" Width="120" />
         <Label Content="Username" Height="23" HorizontalAlignment="Left" Margin="35,74,0,0" Name="label1" VerticalAlignment="Top" Foreground="Black" />
