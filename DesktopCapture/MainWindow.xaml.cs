@@ -14,6 +14,7 @@ using System.Windows.Shapes;
 using System.Windows.Forms;
 using System.Drawing;
 using System.Windows.Threading;
+using KeyEventArgs = System.Windows.Input.KeyEventArgs;
 
 namespace DesktopCapture
 {
@@ -49,6 +50,8 @@ namespace DesktopCapture
             trayMenu.MenuItems.Add(3, new System.Windows.Forms.MenuItem("Exit", new System.EventHandler(Exit_Click)));
 
             trayIcon.ContextMenu = trayMenu;
+
+            UserField.Focus();
 
         }
 
@@ -91,6 +94,11 @@ namespace DesktopCapture
 
         protected void Logout_Click(Object sender, System.EventArgs e)
         {
+            LogOut();
+        }
+
+        protected void LogOut()
+        {
             _focusedWindowManager.ClearActivities();
             TinCan.LogoutTinCan();
         }
@@ -117,5 +125,20 @@ namespace DesktopCapture
             trayIcon.Visible = false;
         }
 
+        private void UserField_OnKeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                LogIntoTinCan();
+            }
+        }
+
+        private void PasswordField_OnKeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                LogIntoTinCan();
+            }
+        }
     }
 }
