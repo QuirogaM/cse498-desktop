@@ -57,10 +57,12 @@ namespace DesktopCapture
 
             newAct.Definition = new ActivityDefinition();
             newAct.Definition.Name = new LanguageMap();
+            newAct.Definition.Description = new LanguageMap();
+            newAct.Definition.Description.Add("type", "Desktop Application Learning Activity");
             newAct.Definition.Name.Add("en-US", activity);
             Random rand = new Random();
             int random = rand.Next();
-            newAct.Id = "http://desktopapp/" + random.ToString();
+            newAct.Id = "http://" + random.ToString() + "/desktopapp/" + activity;
 
             statements[0] = new Statement(new Actor(username, email), interact, newAct);
             
