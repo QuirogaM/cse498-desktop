@@ -2,16 +2,13 @@
 <!--XML Document for storage of Acceptable Learning Programs-->
 <ProgramList>
   <Program>
-    <ProcessName>soffice.bin</ProcessName>
+    <ProcessName>POWERPNT</ProcessName>
+  </Program>
+  <Program>
+    <ProcessName>WinWord</ProcessName>
   </Program>
   <Program>
     <ProcessName>WINWORD</ProcessName>
-  </Program>
-  <Program>
-    <ProcessName>EXCEL</ProcessName>
-  </Program>
-  <Program>
-    <ProcessName>POWERPNT</ProcessName>
   </Program>
   <Program>
     <ProcessName>wmplayer</ProcessName>
